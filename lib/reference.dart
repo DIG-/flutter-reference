@@ -8,7 +8,6 @@ class Reference {
 
   final String id;
 
-  @protected
   Reference(this.id) {
     _finalizer.attach(this, id, detach: this);
   }
