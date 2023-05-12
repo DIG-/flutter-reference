@@ -27,12 +27,19 @@ public class References {
     return shared.remove(id)
   }
 
-  public func get<T>(_ id: String) -> T {
-    return self.refs[id] as! T
+  public func get<T>(_ id: String) throws -> T {
+    let item = self.refs[id]
+    if item == nil {
+      throw NSError(domain: "Reference #\(id) not found", code: -1)
+    }
+    if !(item is T) {
+      throw NSError(domain: "\(type(of: item!)) cannot be cast to \(T.self)", code: -2)
+    }
+    return item as! T
   }
 
-  public static func get<T>(_ id: String) -> T {
-    return shared.get<T>(id)
+  public static func get<T>(_ id: String) throws -> T {
+    return try shared.get<T>(id)
   }
 
   internal func clear() {
