@@ -6,22 +6,28 @@ class Reference {
     _ReferenceChannel.dispose(id);
   });
 
-  final String _id;
+  final String id;
 
-  Reference(this._id) {
-    _finalizer.attach(this, _id, detach: this);
+  @protected
+  Reference(this.id) {
+    _finalizer.attach(this, id, detach: this);
   }
 
   @nonVirtual
   void dispose() {
     _finalizer.detach(this);
   }
+
+  @override
+  String toString() {
+    return "$runtimeType(id=#$id)";
+  }
 }
 
 class _ReferenceChannel {
   static const _channel = MethodChannel("flutter_reference");
 
-  static Future<void> dispose(String id) {
+  static Future<void> dispose(final String id) {
     return _channel.invokeMethod("dispose", id);
   }
 }
