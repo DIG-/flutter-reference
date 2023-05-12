@@ -5,12 +5,13 @@
 Pod::Spec.new do |s|
   s.name             = 'flutter_reference'
   s.version          = '0.0.1'
-  s.summary          = 'A new Flutter plugin project.'
+  s.summary          = 'Flutter Reference'
   s.description      = <<-DESC
-A new Flutter plugin project.
+Simple way to keep reference between native classes and Flutter.
                        DESC
   s.homepage         = 'https://github.com/DIG-/flutter-reference'
-  s.license          = { :file => '../LICENSE' }
+  s.license          = { :file => '../LICENSE', :type => 'Creative Commons Attribution-NoDerivatives 4.0 
+International Public License' }
   s.author           = { 'Gustavo de Oliveira Silva (DIG)' => 'contato@dig.dev.br' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
