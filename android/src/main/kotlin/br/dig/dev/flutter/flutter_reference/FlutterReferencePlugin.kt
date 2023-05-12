@@ -16,10 +16,12 @@ class FlutterReferencePlugin : FlutterPlugin, MethodCallHandler {
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
-        if (call.method == "dispose") {
-            result.success(refs.remove(call.arguments<String>()!!))
-        } else {
-            result.notImplemented()
+        return when (call.method) {
+            "dispose" -> handle(call, result) {
+                refs.remove(it.arguments<String>()!!)
+            }
+
+            else -> result.notImplemented()
         }
     }
 

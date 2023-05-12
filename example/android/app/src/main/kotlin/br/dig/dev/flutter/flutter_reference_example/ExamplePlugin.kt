@@ -1,6 +1,7 @@
 package br.dig.dev.flutter.flutter_reference_example
 
 import br.dig.dev.flutter.flutter_reference.References
+import br.dig.dev.flutter.flutter_reference.handle
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -17,7 +18,7 @@ class ExamplePlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         return when (call.method) {
-            "create" -> {
+            "create" -> handle(call, result) {
                 val instance = when (SecureRandom().nextInt(4)) {
                     0 -> Apple
                     1 -> Banana
@@ -25,12 +26,12 @@ class ExamplePlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                     3 -> NotFruit("NotFruit")
                     else -> NotFruit("Error")
                 }
-                result.success(References.add(instance))
+                References.add(instance)
             }
 
-            "name" -> {
-                val instance = References.get<ExampleClass>(call.arguments<String>()!!)
-                result.success(instance.name)
+            "name" -> handle(call, result) {
+                val instance = References.get<ExampleClass>(it.arguments<String>()!!)
+                instance.name
             }
 
             else -> result.notImplemented()
