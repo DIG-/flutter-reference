@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_reference_example/fruit.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,9 +14,23 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var _fruit = "Wait";
+
   @override
   void initState() {
     super.initState();
+    _loadFruit();
+  }
+
+  void _loadFruit() async {
+    final fruit = await Fruit.create();
+    if (kDebugMode) {
+      print(fruit);
+    }
+    final name = await fruit.name();
+    setState(() {
+      _fruit = name;
+    });
   }
 
   @override
@@ -24,8 +40,8 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: const Center(
-          child: Text("Nothing to do here"),
+        body: Center(
+          child: Text("Fruit: $_fruit"),
         ),
       ),
     );
