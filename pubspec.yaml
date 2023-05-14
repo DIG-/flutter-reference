@@ -1,6 +1,6 @@
 name: flutter_reference
 description: A simple Flutter plugin to keep object in memory on native code, while pass a string reference to Flutter code.
-version: 0.0.1
+version: 0.0.2
 repository: https://github.com/DIG-/flutter-reference
 
 environment:
