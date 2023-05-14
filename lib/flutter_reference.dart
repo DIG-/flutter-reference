@@ -1,1 +1,3 @@
-export 'reference.dart' show Reference;
+library flutter_reference;
+
+export 'src/reference.dart' show Reference;

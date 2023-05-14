@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_reference/reference.dart';
+import 'package:flutter_reference/flutter_reference.dart';
 
 class Fruit extends Reference {
   @protected
