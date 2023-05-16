@@ -20,7 +20,7 @@ class _FruitChannel {
   static const channel = MethodChannel("example_plugin");
 
   static Future<Fruit> create() {
-    return channel.invokeMethod("create").then((value) => Fruit(value));
+    return channel.invokeMethodReference("create", (id) => Fruit(id));
   }
 
   static Future<String> name(final Fruit fruit) {
