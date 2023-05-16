@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
+
+import '../flutter_reference_platform_interface.dart';
 
 /// A class to retain a reference from native code, allowing communication
 /// without serialization.
@@ -9,7 +10,7 @@ class Reference {
   /// Automagically handle garbage collection on Dart side to apply effect on
   /// native side.
   static final _finalizer = Finalizer<String>((id) {
-    _ReferenceChannel.dispose(id);
+    FlutterReferencePlatform.instance.disposeById(id);
   });
 
   /// Reference ID generated on native side.
@@ -31,12 +32,17 @@ class Reference {
   String toString() {
     return "$runtimeType(id=#$id)";
   }
-}
 
-class _ReferenceChannel {
-  static const _channel = MethodChannel("flutter_reference");
+  /// The hash code for this object.
+  @override
+  int get hashCode => id.hashCode;
 
-  static Future<void> dispose(final String id) {
-    return _channel.invokeMethod("dispose", id);
+  /// The equality operator.
+  @override
+  bool operator ==(Object other) {
+    if (other is! Reference) {
+      return false;
+    }
+    return other.id == id;
   }
 }
