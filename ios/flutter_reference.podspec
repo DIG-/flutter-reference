@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_reference'
-  s.version          = '0.0.2'
+  s.version          = '0.0.3'
   s.summary          = 'Flutter Reference'
   s.description      = <<-DESC
 Simple way to keep reference between native classes and Flutter.
