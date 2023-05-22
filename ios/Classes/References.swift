@@ -30,10 +30,10 @@ public class References {
   public func get<T>(_ id: String) throws -> T {
     let item = self.refs[id]
     if item == nil {
-      throw NSError(domain: "Reference #\(id) not found", code: -1)
+      throw ReferenceNotFound(id: id)
     }
     if !(item is T) {
-      throw NSError(domain: "\(type(of: item!)) cannot be cast to \(T.self)", code: -2)
+      throw ForceCastException(item!, T.self)
     }
     return item as! T
   }
