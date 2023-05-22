@@ -16,6 +16,9 @@ public class ForceCastException: LocalizedError {
   public convenience init<T>(_ item: AnyObject, _ target: T.Type) {
     self.init("\(type(of: item)) cannot be cast into \(target)")
   }
+  public convenience init<T, U>(from: T.Type, _ target: U.Type) {
+    self.init("\(from) cannot be cast into \(target)")
+  }
 }
 
 public class ReferenceNotFound: LocalizedError {
