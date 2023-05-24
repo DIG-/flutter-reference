@@ -13,7 +13,7 @@ public class ForceCastException: LocalizedError {
   public init(_ description: String?) {
     self.errorDescription = description
   }
-  public convenience init<T>(_ item: AnyObject, _ target: T.Type) {
+  public convenience init<T>(_ item: Any, _ target: T.Type) {
     self.init("\(type(of: item)) cannot be cast into \(target)")
   }
   public convenience init<T, U>(from: T.Type, _ target: U.Type) {

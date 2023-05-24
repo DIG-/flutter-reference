@@ -29,7 +29,7 @@ class ExamplePlugin: NSObject, FlutterPlugin {
       handle(
         call, result,
         action: { it in
-          let instance: ExampleClass = try References.get(it.arguments as! String)
+          let instance: ExampleClass = try References.get(it.argument().unwrap())
           return instance.name
         })
 

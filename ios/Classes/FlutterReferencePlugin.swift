@@ -13,7 +13,7 @@ public class FlutterReferencePlugin: NSObject, FlutterPlugin {
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
     case "dispose":
-      handle(call, result, action: { it in return refs.remove(it.arguments as! String) })
+      handle(call, result, action: { it in return try refs.remove(it.argument().unwrap()) })
     default:
       result(FlutterMethodNotImplemented)
     }

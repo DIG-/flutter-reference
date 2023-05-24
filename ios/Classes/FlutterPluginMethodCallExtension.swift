@@ -20,33 +20,47 @@ extension FlutterPlugin {
 }
 
 extension FlutterMethodCall {
-  public func argument<T: AnyObject>() throws -> T? {
-    if let arg = arguments {
-      if arg is T {
-        return arg as? T
-      } else {
-        throw ForceCastException(from: type(of: arguments), T.self)
+  public func argument<T: Any>() throws -> T? {
+    if let argument = arguments {
+      if let typed = argument as? T {
+        return typed
       }
+      throw ForceCastException(argument, T.self)
     } else {
       return nil
     }
   }
 
-  public func argument<T: AnyObject>(_ key: String) throws -> T? {
+  public func argument<T: Any>(_ key: String) throws -> T? {
     if arguments == nil {
       return nil
     }
-    let map = arguments as? [String: AnyObject]
-    if map == nil {
-      throw ForceCastException(arguments! as AnyObject, [String: AnyObject].self)
+    if let map = arguments as? [String: Any] {
+      if let item = map[key] {
+        if let typed = item as? T {
+          return typed
+        }
+        throw ForceCastException(item, T.self)
+      } else {
+        return nil
+      }
     }
-    let item = map![key]
-    if item == nil {
-      return nil
+    throw ForceCastException(arguments!, [String: Any].self)
+  }
+}
+
+extension Optional where Wrapped: Any {
+  public func unwrap() throws -> Wrapped {
+    if let item = self {
+      return item
     }
-    if item is T {
-      return item as? T
+    throw UnwrapException(name: "Optional")
+  }
+
+  public func unwrap(_ message: () -> String) throws -> Wrapped {
+    if let item = self {
+      return item
     }
-    throw ForceCastException(item!, T.self)
+    throw UnwrapException(message())
   }
 }

@@ -28,14 +28,13 @@ public class References {
   }
 
   public func get<T>(_ id: String) throws -> T {
-    let item = self.refs[id]
-    if item == nil {
-      throw ReferenceNotFound(id: id)
+    if let item = self.refs[id] {
+      if let typed = item as? T {
+        return typed
+      }
+      throw ForceCastException(item, T.self)
     }
-    if !(item is T) {
-      throw ForceCastException(item!, T.self)
-    }
-    return item as! T
+    throw ReferenceNotFound(id: id)
   }
 
   public static func get<T>(_ id: String) throws -> T {
