@@ -1,5 +1,9 @@
 Changelog
 =========
+0.0.5
+=====
+- Updated generic method to force infer type in Swift
+
 0.0.4
 -----
 - Created Exceptions for Swift
