@@ -27,7 +27,7 @@ public class References {
     return shared.remove(id)
   }
 
-  public func get<T>(_ id: String) throws -> T {
+  public func get<T>(_: T.Type, _ id: String) throws -> T {
     if let item = self.refs[id] {
       if let typed = item as? T {
         return typed
@@ -37,8 +37,16 @@ public class References {
     throw ReferenceNotFound(id: id)
   }
 
+  public func get<T>(_ id: String) throws -> T {
+    return try get(T.self, id)
+  }
+
   public static func get<T>(_ id: String) throws -> T {
-    return try shared.get<T>(id)
+    return try shared.get(T.self, id)
+  }
+
+  public static func get<T>(_ t: T.Type, _ id: String) throws -> T {
+    return try shared.get(t, id)
   }
 
   internal func clear() {

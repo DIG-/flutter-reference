@@ -20,7 +20,7 @@ extension FlutterPlugin {
 }
 
 extension FlutterMethodCall {
-  public func argument<T: Any>() throws -> T? {
+  public func argument<T: Any>(_: T.Type) throws -> T? {
     if let argument = arguments {
       if let typed = argument as? T {
         return typed
@@ -31,7 +31,11 @@ extension FlutterMethodCall {
     }
   }
 
-  public func argument<T: Any>(_ key: String) throws -> T? {
+  public func argument<T: Any>() throws -> T? {
+    return try argument(T.self)
+  }
+
+  public func argument<T: Any>(_: T.Type, _ key: String) throws -> T? {
     if arguments == nil {
       return nil
     }
@@ -47,6 +51,10 @@ extension FlutterMethodCall {
     }
     throw ForceCastException(arguments!, [String: Any].self)
   }
+
+  public func argument<T: Any>(_ key: String) throws -> T? {
+    return try argument(T.self, key)
+  }
 }
 
 extension Optional where Wrapped: Any {
@@ -55,6 +63,13 @@ extension Optional where Wrapped: Any {
       return item
     }
     throw UnwrapException(name: "Optional")
+  }
+
+  public func unwrap(name: String) throws -> Wrapped {
+    if let item = self {
+      return item
+    }
+    throw UnwrapException(name: name)
   }
 
   public func unwrap(_ message: () -> String) throws -> Wrapped {
